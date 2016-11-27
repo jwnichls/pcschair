@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  active_paper: false
+  timer: 2016-11-08 08:36:32
+  breaktime: false
+  paper_title: MyString
+  paper_authors: MyString
+  paper_pcs_id: 1
+
+two:
+  name: MyString
+  active_paper: false
+  timer: 2016-11-08 08:36:32
+  breaktime: false
+  paper_title: MyString
+  paper_authors: MyString
+  paper_pcs_id: 1

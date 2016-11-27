@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "PCS Chairing Assistant",
+  "description": "This extension assists with the use of PCS for chairing program committee meetings",
+  "version": "1.0",
+
+  "content_scripts": [
+	{
+    	"matches": ["http://precisionconference.com/*","https://precisionconference.com/*"],
+    	"js": ["jquery.js","pcs.js"],
+		"run_at" : "document_end"
+	}
+  ],
+
+  "background": {
+	"scripts": ["jquery.js","background.js"],
+    "persistent": false
+  },
+
+  "permissions": [
+    "http://localhost:3000/"
+  ]
+}

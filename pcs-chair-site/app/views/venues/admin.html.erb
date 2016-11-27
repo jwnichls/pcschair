@@ -1,0 +1,114 @@
+<script>
+var venueID = <%= @venue.id %>
+var adminFlag = true;
+var notifyAudio = null;
+var pcsVenueInfo = null;
+
+$(function() {
+	notifyAudio = new Audio('/alert.mp3');
+
+	forcePageRefresh(function() { 
+		forcePapersRefresh(function() {
+			startTimer();
+			startVenueUpdate();			
+		});
+	});
+	
+	$("#takebreak").click(function() {
+		var sendData = {breaktime : true};
+		updateVenueWithData(sendData, function() { forcePageRefresh(); });
+	})
+	$("#endbreak").click(function() {
+		var sendData = {breaktime : false};
+		updateVenueWithData(sendData, function() { forcePageRefresh(); });
+		
+		notifyAudio.play();
+	});
+	$("#clearTimer").click(function() {
+		var sendData = {timer : null};
+		updateVenueWithData(sendData, function() { forcePageRefresh(); });
+	})
+	$("#setTimer").click(function() {
+		var increment = parseInt($("#timerNum").val());
+		if (Number.isInteger(increment)) {
+			var newTime = new Date((new Date()).getTime() + increment*60*1000);
+			var sendData = {timer : newTime.toUTCString()};
+			updateVenueWithData(sendData, function() { forcePageRefresh(); });
+		}
+	})
+	$("#addNewPaper").click(function() {
+		var paperId = parseInt($("#newPaperId").val());
+		if (Number.isInteger(paperId)) {
+			var sendData = { 
+					pcs_id : paperId
+				};
+
+			$.ajax({
+			           type: "POST",
+			           url: "/venues/" + venueID + "/addpaper",
+			           dataType: "json",
+			           success: function() { forcePapersRefresh(); },
+			           data: sendData
+			       });	
+		}
+	})
+	$("#clearActivePaper").click(function() {
+		var sendData = {active_paper : false};
+		updateVenueWithData(sendData, function() { forcePageRefresh(); });
+	})
+})
+</script>
+
+<p id="notice"><%= notice %></p>
+
+<h1>ADMIN VIEW: <%= @venue.name %></h1>
+
+<div id="controls" class="row">
+	<p>
+		Timer: 
+		<input type="text" id="timerNum" value="5"/>
+		<button id="setTimer">Set</button>
+		<button id="clearTimer">Clear</button>
+		
+		Paper Queue: 
+		<input type="text" id="newPaperId"/>
+		<button id="addNewPaper">Add</button>
+		
+		<button id="clearActivePaper">Clear Active Paper</button>
+	</p>
+</div>
+<div id="break" class="row invisible">
+	<h2>Currently on Break</h2>
+	<p><button id="endbreak">End Break</button></p>
+</div>
+<div id="main"> 
+	<div class="row">
+		<p><button id="takebreak">Take Break</button></p>
+	</div>
+	<div class="row">
+		<div class="col-md-6" id="timer">
+			<!-- Timer goes here -->
+			<p class="timer">
+			  No Timer
+			</p>
+		</div>
+		<div class="col-md-6" id="paper-info">
+			<% if @venue.active_paper -%>
+				<p class="paper-id"><%= @venue.paper_pcs_id %></p>
+				<p class="paper-title"><%= @venue.paper_title %></p>
+				<p class="paper-authors"><%= @venue.paper_authors %></p>
+			<% else -%>
+				<p class="no-active-paper">No Active Paper</p>
+			<% end -%>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="cold-md-12">
+		<ul id="paper-queue">
+		<% @papers.each do |paper| -%>
+			<li><%= paper.pcs_paper_id %></li>
+		<% end -%>
+		</ul>
+	</div>
+</div>

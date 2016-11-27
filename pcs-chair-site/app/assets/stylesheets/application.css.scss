@@ -1,0 +1,7 @@
+$container-tablet: 750px;
+$container-desktop: $container-tablet;
+$container-large-desktop: $container-tablet;
+$navbar-inverse-link-color: rgb(215,227,215);
+
+@import "bootstrap";
+@import "snootybird";

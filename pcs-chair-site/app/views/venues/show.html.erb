@@ -1,0 +1,51 @@
+<script>
+var venueID = <%= @venue.id %>
+var adminFlag = false;
+var notifyAudio = null;
+var pcsVenueInfo = null;
+
+$(function() {
+	notifyAudio = new Audio('/alert.mp3');
+	
+	forcePageRefresh(function() { 
+		forcePapersRefresh(function() {
+			startTimer();
+			startVenueUpdate();			
+		});
+	});
+})
+</script>
+
+<p id="notice"><%= notice %></p>
+
+<h1><%= @venue.name %></h1>
+
+<div id="break" class="row invisible">
+	<h2>Currently on Break</h2>
+</div>
+<div id="main" class="row">
+<div class="col-md-6" id="timer">
+	<!-- Timer goes here -->
+	<p class="timer">
+	  No Timer
+	</p>
+</div>
+<div class="col-md-6" id="paper-info">
+	<% if @venue.active_paper -%>
+		<p class="paper-id"><%= @venue.paper_pcs_id %></p>
+		<p class="paper-title"><%= @venue.paper_title %></p>
+		<p class="paper-authors"><%= @venue.paper_authors %></p>
+	<% else -%>
+		<p class="no-active-paper">No Active Paper</p>
+	<% end -%>
+</div>
+</div>
+<div class="row">
+	<div class="cold-md-12">
+		<ul id="paper-queue">
+		<% @papers.each do |paper| -%>
+			<li><%= paper.pcs_paper_id %></li>
+		<% end -%>
+		</ul>
+	</div>
+</div>

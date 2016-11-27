@@ -1,0 +1,23 @@
+<h1>Listing venues</h1>
+
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>On Break?</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @venues.each do |venue| %>
+  <tr>
+    <td><%= link_to venue.name, venue %></td>
+    <td><%= venue.breaktime ? "On Break" : "Active" %></td>
+    <td><%= link_to 'Edit', edit_venue_path(venue) %></td>
+    <td><%= link_to 'Destroy', venue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Venue', new_venue_path %>

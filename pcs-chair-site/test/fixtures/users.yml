@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  email: MyString
+  signed_date: 2014-05-23 16:30:54
+  initials: MyString
+  employer: MyString
+
+two:
+  email: MyString
+  signed_date: 2014-05-23 16:30:54
+  initials: MyString
+  employer: MyString
