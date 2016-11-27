@@ -2,13 +2,14 @@
 # lock '3.2.1'
 
 set :application, 'pcschairassist'
-set :repo_url, 'git@github.com:jwnichls/pcs-chairing-assistant.git'
+set :repo_url, 'git@github.com:jwnichls/pcschair.git'
+set :repo_tree, 'pcs-chair-site'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, "/home/jwnichls/web/pcschairassist"
+set :deploy_to, "/home/jwnichls/web/pcschair"
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -53,26 +54,5 @@ namespace :deploy do
       # end
     end
   end
-
-end
-
-# ==============================
-# Uploads
-# ==============================
-
-namespace :uploads do
-
-  desc <<-EOD
-    [internal] Creates the symlink to uploads shared folder
-    for the most recently deployed version.
-  EOD
-  task :symlink do
-    on roles(:app) do
-      execute "rm -rf #{release_path}/public/uploads"
-      execute "ln -nfs #{shared_path}/uploads #{release_path}/public/uploads"
-    end
-  end
-  
-  after "deploy:symlink:release", "uploads:symlink"
 
 end
