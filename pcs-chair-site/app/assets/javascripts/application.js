@@ -15,6 +15,8 @@
 //= require bootstrap
 //= require_tree .
 
+var secondsWasZero = false;
+
 function startTimer() {
 	setInterval(function() {
 		if (pcsVenueInfo.timer != null) {
@@ -29,11 +31,18 @@ function startTimer() {
 				
 				var minutes = Math.floor(timeDiff / (60*1000));
 				var seconds = Math.floor(timeDiff / 1000) - (minutes * 60);
-			} else {
+			} else {				
 				$("#timer").addClass("expired");
 				
 				var minutes = Math.abs(Math.ceil(timeDiff / (60*1000)));
 				var seconds = Math.abs(Math.ceil((timeDiff + (minutes * 60*1000)) / 1000));
+				
+				if (!secondsWasZero && timerAudio != null && minutes == 0 && seconds == 0) {
+					secondsWasZero = true;
+					timerAudio.play();
+				} else {
+					secondsWasZero = false;
+				}
 			}
 			
 			

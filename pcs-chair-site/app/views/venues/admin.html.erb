@@ -2,10 +2,12 @@
 var venueID = <%= @venue.id %>
 var adminFlag = true;
 var notifyAudio = null;
+var timerAudio = null;
 var pcsVenueInfo = null;
 
 $(function() {
 	notifyAudio = new Audio('/alert.mp3');
+	timerAudio = new Audio('/airhorn.mp3');
 
 	forcePageRefresh(function() { 
 		forcePapersRefresh(function() {
