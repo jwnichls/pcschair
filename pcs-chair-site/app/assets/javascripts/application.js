@@ -44,24 +44,24 @@ function startTimer() {
 			$("#timer").html(minutes + ":" + seconds);
 		} else {
 			$("#timer").removeClass("expired");
-			$("#timer").html("No Timer");
+			$("#timer").html("0:00");
 		}
 	}, 1000);
 }
 
 function replacePaperInfo() {
 	if (pcsVenueInfo.active_paper) {
-		var id = $("<p></p>").addClass("paper-id").text(pcsVenueInfo.paper_pcs_id);
+		var id = $("<p></p>").addClass("paper-id").text("Paper #" + pcsVenueInfo.paper_pcs_id);
 		var title = $("<p></p>").addClass("paper-title").text(pcsVenueInfo.paper_title);
 		var authors = $("<ul></ul>").addClass("paper-authors");
 		
 		var authorStrs = pcsVenueInfo.paper_authors.split("\n");
 		for(i = 0; i < authorStrs.length; i++)
-			authors.append($("<li></li>").text(authorStrs[i]));
+			authors.append($("<li></li>").addClass("author").text(authorStrs[i]));
 
 		$("#paper-info").empty().append(id,title,authors);
 	} else {
-		$("#paper-info").html("No Active Paper");
+		$("#paper-info").html('<p class="no-active-paper">No Active Paper</p>');
 	}
 }
 
@@ -115,7 +115,7 @@ function refreshPapers() {
 	
 	for(i = 0; i < pcsVenueInfo.papers.length; i++) {
 		var paperId = pcsVenueInfo.papers[i].pcs_paper_id;
-		var paperItem = $("<li></li>");
+		var paperItem = $("<li></li>").addClass("paper");
 		if (adminFlag && i != 0) { 
 			var upLink = $("<a></a>").text("up");
 			paperItem.append(upLink);

@@ -85,14 +85,11 @@ $(function() {
 	<div class="row">
 		<p><button id="takebreak">Take Break</button></p>
 	</div>
-	<div class="row">
-		<div class="col-md-6" id="timer">
-			<!-- Timer goes here -->
-			<p class="timer">
-			  No Timer
-			</p>
+	<div class="row mainrow rowspace50">
+		<div class="col-md-4" id="timer">
+			0:00
 		</div>
-		<div class="col-md-6" id="paper-info">
+		<div class="col-md-8" id="paper-info">
 			<% if @venue.active_paper -%>
 				<p class="paper-id"><%= @venue.paper_pcs_id %></p>
 				<p class="paper-title"><%= @venue.paper_title %></p>
@@ -103,11 +100,12 @@ $(function() {
 		</div>
 	</div>
 </div>
-<div class="row">
+<div class="row rowspace50">
 	<div class="cold-md-12">
+		<p><b>Upcoming Papers:</b></p>
 		<ul id="paper-queue">
 		<% @papers.each do |paper| -%>
-			<li><%= paper.pcs_paper_id %></li>
+			<li class="paper"><%= paper.pcs_paper_id %></li>
 		<% end -%>
 		</ul>
 	</div>

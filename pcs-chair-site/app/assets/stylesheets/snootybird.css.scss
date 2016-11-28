@@ -1,3 +1,54 @@
+div.mainrow {
+	min-height: 10em;
+}
+
+#timer {
+	font-family: "Helvetica", Sans-serif;
+	font-size: 6em;
+	font-weight: bold;
+	text-align: center;
+}
+
+p.no-active-paper {
+	font-family: "Helvetica", Sans-serif;
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: center;
+}
+
+p.paper-id {
+	font-family: "Helvetica", Sans-serif;
+	font-size: 1.5em;
+	font-weight: bold;
+	text-align: center;
+	color: rgb(150,150,150);
+}
+
+p.paper-title {
+	font-family: "Helvetica", Sans-serif;
+	font-size: 2em;
+	font-weight: bold;
+	text-align: center;
+	line-height: 1.25em;
+}
+
+ul.paper-authors {
+	padding-top: 25px !important;
+}
+
+li.author {
+	font-family: "Helvetica", Sans-serif;
+	font-size: 1.25em;
+	font-weight: normal;
+}
+
+li.paper {
+	list-style-type: none;
+	font-family: "Helvetica", Sans-serif;
+	font-size: 1em;
+	font-weight: normal;
+}
+
 div.rowspace100 {
 	padding-top: 100px !important;
 }
