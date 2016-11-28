@@ -1,4 +1,4 @@
-var PCS_ASSIST_SERVER_HOST = "http://localhost:3000";
+var PCS_ASSIST_SERVER_HOST = "http://pcschair.org";
 var PCS_VENUE_ID = 1;
 
 function updateVenueWithData(sendData, callback) {

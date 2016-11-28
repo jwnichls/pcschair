@@ -19,6 +19,6 @@
   },
 
   "permissions": [
-    "http://localhost:3000/"
+    "http://pcschair.org/"
   ]
 }
