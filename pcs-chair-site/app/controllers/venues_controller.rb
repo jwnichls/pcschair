@@ -71,6 +71,11 @@ class VenuesController < ApplicationController
 
     respond_to do |format|
       if @venue.update_attributes(params[:venue])
+        qpaper = @venue.papers.find_by_pcs_paper_id(@venue.paper_pcs_id)
+        if qpaper != nil
+          qpaper.destroy
+        end
+
         format.html { redirect_to @venue, notice: 'Venue was successfully updated.' }
         format.json { head :no_content }
       else
