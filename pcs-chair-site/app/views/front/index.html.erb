@@ -4,11 +4,24 @@
   <title>PCS Chairing Assistant</title>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
 </head>
 <body class="title-body">
-	<h1>PCS Chair Assistant</h1>
+	<div class="container">
+		<div class="row">
+			<h1>PCS Chair Assistant</h1>
+		</div>
 
-	<%= stylesheet_link_tag    "application", :media => "all" %>
-	<%= javascript_include_tag "application" %>
+		<div class="row rowspace25">
+			<p>Available meetings:</p>
+	
+			<ul>
+			<% @venues.each do |venue| -%>
+				<li class="venue"><%= link_to venue.name, venue %></li>
+			<% end -%>
+			</ul>
+		</div>
+	</div>
 </body>
 </html>
