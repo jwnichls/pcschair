@@ -6,6 +6,22 @@ $.urlParam = function(name){
 	return results[1] || 0;
 }
 
+function clearActivePaper(closeFlag) {
+	var sendData = {
+		"paper_title" : "",
+	    "paper_authors" : "",
+		"active_paper" : false
+	}
+
+	if (AUTOSET_TIMER_FLAG) {
+		sendData.timer = null;
+	}
+
+	chrome.runtime.sendMessage(sendData, function() {
+		if (closeFlag) window.close();
+	});	
+}
+
 $(function() {
 	if (window.location.pathname.indexOf("adminOnePaper") >= 0) {
 		var paperId = $.urlParam("paperNumber");
@@ -37,21 +53,13 @@ $(function() {
 		chrome.runtime.sendMessage(sendData, function() {
 		    // active paper data updated
 		});
+		
+		$($("a.rollover")[0])
+			.attr("href",'')
+			.click(function() { clearActivePaper(true); });
 	}
 
-	$(window).on("unload",function() {
-		var sendData = {
-			"paper_title" : "",
-		    "paper_authors" : "",
-			"active_paper" : false
-		}
-
-		if (AUTOSET_TIMER_FLAG) {
-			sendData.timer = null;
-		}
-
-		chrome.runtime.sendMessage(sendData, function() {
-			// active paper turned to false
-		});	
+	$(window).on("beforeunload",function() {
+		clearActivePaper(false);
 	})
 })
