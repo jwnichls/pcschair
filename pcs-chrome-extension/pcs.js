@@ -17,7 +17,7 @@ function clearActivePaper(closeFlag) {
 		sendData.timer = null;
 	}
 
-	chrome.runtime.sendMessage(sendData, function() {
+	chrome.runtime.sendMessage({type: "update", sendData: sendData }, function() {
 		if (closeFlag) window.close();
 	});	
 }
@@ -50,16 +50,30 @@ $(function() {
 			sendData.timer = newTime.toUTCString();
 		}
 		
-		chrome.runtime.sendMessage(sendData, function() {
+		chrome.runtime.sendMessage({type: "update", sendData: sendData }, function() {
 		    // active paper data updated
 		});
 		
 		$($("a.rollover")[0])
 			.attr("href",'')
 			.click(function() { clearActivePaper(true); });
+			
+		$(window).on("beforeunload",function() {
+			clearActivePaper(false);
+		})		
 	}
-
-	$(window).on("beforeunload",function() {
-		clearActivePaper(false);
-	})
+	else if (window.location.host == "pcschair.org" && window.location.pathname.indexOf("admin") > 0) {
+		var updateFunc = function() {
+			var increment = parseInt($("#timerNum").val());
+			if (Number.isInteger(increment)) {
+				alert("timer value: " + increment);
+				chrome.runtime.sendMessage({type: "timer", timerValue: increment}, function() {
+					// timer value updated
+				})
+			}
+		}
+		
+		$("#timerNum").change(updateFunc);
+		updateFunc();
+	}
 })

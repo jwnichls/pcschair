@@ -7,7 +7,7 @@
 
   "content_scripts": [
 	{
-    	"matches": ["http://precisionconference.com/*","https://precisionconference.com/*"],
+    	"matches": ["http://precisionconference.com/*","https://precisionconference.com/*", "http://pcschair.org/*"],
     	"js": ["jquery.js","pcs.js"],
 		"run_at" : "document_end"
 	}
