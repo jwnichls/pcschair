@@ -134,7 +134,7 @@ function refreshPapers() {
 				paperItem.append($('<img src="/assets/clear.jpg" width="12"/>'));
 			}
 
-			var paperLink = $("<a></a>").text(paperId);
+			var paperLink = $("<a></a>").text(paperId).addClass("paperLink");
 			if (pcsUserRef != null) {
 				link.attr("href","https://precisionconference.com/~chi17pn/adminOnePaper?userRef=" + pcsUserRef + "&paperNumber=" + paperId + "&noHomeButton=true&noLogoutButton=true&closeWindowButton=true")
 			}
