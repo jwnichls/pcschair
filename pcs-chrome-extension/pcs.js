@@ -8,7 +8,7 @@ $.urlParam = function(name){
 	return results[1] || 0;
 }
 
-function clearActivePaper(closeFlag) {
+function PCSCHAIRclearActivePaper(closeFlag) {
 	var sendData = {
 		"paper_title" : "",
 	    "paper_authors" : "",
@@ -25,11 +25,16 @@ function clearActivePaper(closeFlag) {
 }
 
 $(function() {
-	if (window.location.pathname.indexOf("adminOnePaper") >= 0) {
+	if (window.location.host == "precisionconference.com") {
 		var pcsUserRef = $.urlParam("userRef");
-		chrome.runtime.sendMessage({type: "set-pcs-user-ref", pcsUserRef: pcsUserRef }, function() {
-		    // pcs user ref updated
-		});
+		if (pcsUserRef != null) {
+			chrome.runtime.sendMessage({type: "set-pcs-user-ref", pcsUserRef: pcsUserRef }, function() {
+			    // pcs user ref updated
+			});
+		}
+	}
+	
+	if (window.location.pathname.indexOf("adminOnePaper") >= 0) {
 
 		var paperId = $.urlParam("paperNumber");
 		var title = $("h1 font").text();
@@ -63,10 +68,10 @@ $(function() {
 		
 		$($("a.rollover")[0])
 			.attr("href",'')
-			.click(function() { clearActivePaper(true); });
+			.click(function() { PCSCHAIRclearActivePaper(true); });
 			
 		$(window).on("beforeunload",function() {
-			clearActivePaper(false);
+			PCSCHAIRclearActivePaper(false);
 		})		
 	}
 	else if (window.location.host == "pcschair.org" && window.location.pathname.indexOf("admin") > 0) {
@@ -82,9 +87,13 @@ $(function() {
 		$("#timerNum").change(updateFunc);
 		updateFunc();
 		
-		chrome.runtime.sendMessage({type: "get-pcs-user-ref"}, function(response) {
-		    // pcs user ref updated
-			pcsUserRef = response.pcsUserRef;
-		});
+		$("#paper-queue").click(function(event) {
+			if ($(event.target).hasClass("paperLink")) {
+				var paperId = $(event.target).text();
+				chrome.runtime.sendMessage({type: "open-pcs-page", paperId: paperId}, function(response) {
+				    // hopefully the page opened
+				});
+			}
+		})
 	}
 })

@@ -19,6 +19,7 @@
   },
 
   "permissions": [
-    "http://pcschair.org/"
+    "http://pcschair.org/",
+	"tabs"
   ]
 }

@@ -2,7 +2,7 @@ var PCS_ASSIST_SERVER_HOST = "http://pcschair.org";
 var PCS_VENUE_ID = 1;
 
 var TIMER_VALUE = 5;
-var PCS_USER_REF = "";
+var PCS_USER_REF = null;
 
 function updateVenueWithData(sendData, callback) {
 	if (sendData.timer != null) {
@@ -30,7 +30,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, callback) {
 	else if (message.type == "set-pcs-user-ref") {
 		PCS_USER_REF = message.pcsUserRef;
 	}
-	else if (message.type == "get-pcs-user-ref") {
-		callback({pcsUserRef: PCS_USER_REF});
+	else if (message.type == "open-pcs-page") {
+		if (PCS_USER_REF != null) {
+			chrome.tabs.create({'url': "https://precisionconference.com/~chi17pn/adminOnePaper?userRef=" + PCS_USER_REF + "&paperNumber=" + message.paperId + "&noHomeButton=true&noLogoutButton=true&closeWindowButton=true&anonView=true"});
+		}
 	}
 });
