@@ -1,6 +1,8 @@
 var AUTOSET_TIMER_FLAG = true;
 var AUTOSET_TIMER_INTERVAL = 5;
 
+var PCS_USER_REF = null;
+
 $.urlParam = function(name){
 	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 	return results[1] || 0;
@@ -24,6 +26,11 @@ function clearActivePaper(closeFlag) {
 
 $(function() {
 	if (window.location.pathname.indexOf("adminOnePaper") >= 0) {
+		var pcsUserRef = $.urlParam("userRef");
+		chrome.runtime.sendMessage({type: "set-pcs-user-ref", pcsUserRef: pcsUserRef }, function() {
+		    // pcs user ref updated
+		});
+
 		var paperId = $.urlParam("paperNumber");
 		var title = $("h1 font").text();
 		var authors = "";
@@ -66,7 +73,6 @@ $(function() {
 		var updateFunc = function() {
 			var increment = parseInt($("#timerNum").val());
 			if (Number.isInteger(increment)) {
-				alert("timer value: " + increment);
 				chrome.runtime.sendMessage({type: "timer", timerValue: increment}, function() {
 					// timer value updated
 				})
@@ -75,5 +81,19 @@ $(function() {
 		
 		$("#timerNum").change(updateFunc);
 		updateFunc();
+		
+		var addPCSPaperLinks() {
+			chrome.runtime.sendMessage({type: "get-pcs-user-ref"}, function(response) {
+			    // pcs user ref updated
+				PCS_USER_REF = response.pcsUserRef;
+				
+				if (PCS_USER_REF != null) {
+					var queuePaper = $("#paper-queue li");
+					for(var i = 0; i < queuePaper.length; i++) {
+						var paper = $(queuePaper[i]);
+					}
+				}
+			});			
+		}
 	}
 })

@@ -134,7 +134,7 @@ function refreshPapers() {
 				paperItem.append($('<img src="/assets/clear.jpg" width="12"/>'));
 			}
 		}
-		paperItem.append(" " + paperId + " ");
+		paperItem.append($("<span></span>").text(paperId));
 		if (adminFlag) {
 		 	if (i != pcsVenueInfo.papers.length-1) {
 				var downLink = $("<a></a>").addClass("downLink").html('<img src="/assets/down.jpg" width="12"/>');

@@ -2,6 +2,7 @@ var PCS_ASSIST_SERVER_HOST = "http://pcschair.org";
 var PCS_VENUE_ID = 1;
 
 var TIMER_VALUE = 5;
+var PCS_USER_REF = "";
 
 function updateVenueWithData(sendData, callback) {
 	if (sendData.timer != null) {
@@ -25,5 +26,11 @@ chrome.runtime.onMessage.addListener(function(message, sender, callback) {
 	}
 	else if (message.type == "timer") {
 		TIMER_VALUE = message.timerValue;
+	}
+	else if (message.type == "set-pcs-user-ref") {
+		PCS_USER_REF = message.pcsUserRef;
+	}
+	else if (message.type == "get-pcs-user-ref") {
+		callback({pcsUserRef: PCS_USER_REF});
 	}
 });
