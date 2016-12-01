@@ -82,18 +82,9 @@ $(function() {
 		$("#timerNum").change(updateFunc);
 		updateFunc();
 		
-		var addPCSPaperLinks() {
-			chrome.runtime.sendMessage({type: "get-pcs-user-ref"}, function(response) {
-			    // pcs user ref updated
-				PCS_USER_REF = response.pcsUserRef;
-				
-				if (PCS_USER_REF != null) {
-					var queuePaper = $("#paper-queue li");
-					for(var i = 0; i < queuePaper.length; i++) {
-						var paper = $(queuePaper[i]);
-					}
-				}
-			});			
-		}
+		chrome.runtime.sendMessage({type: "get-pcs-user-ref"}, function(response) {
+		    // pcs user ref updated
+			pcsUserRef = response.pcsUserRef;
+		});
 	}
 })

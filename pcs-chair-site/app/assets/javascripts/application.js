@@ -133,9 +133,13 @@ function refreshPapers() {
 			} else {
 				paperItem.append($('<img src="/assets/clear.jpg" width="12"/>'));
 			}
-		}
-		paperItem.append($("<span></span>").text(paperId));
-		if (adminFlag) {
+
+			var paperLink = $("<a></a>").text(paperId);
+			if (pcsUserRef != null) {
+				link.attr("href","https://precisionconference.com/~chi17pn/adminOnePaper?userRef=" + pcsUserRef + "&paperNumber=" + paperId + "&noHomeButton=true&noLogoutButton=true&closeWindowButton=true")
+			}
+			paperItem.append(paperLink);
+
 		 	if (i != pcsVenueInfo.papers.length-1) {
 				var downLink = $("<a></a>").addClass("downLink").html('<img src="/assets/down.jpg" width="12"/>');
 				paperItem.append(downLink);
@@ -146,6 +150,8 @@ function refreshPapers() {
 			var removeLink = $("<a></a>").addClass("removeLink").html('<img src="/assets/remove.jpg" width="12"/>');
 			paperItem.append(" ",removeLink);
 			removeLink.click(makePaperRemoveClickHandler(paperId));
+		} else {
+			paperItem.append($("<span></span>").text(paperId));
 		}
 		
 		$("#paper-queue").append(paperItem);
