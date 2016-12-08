@@ -163,7 +163,7 @@ function forcePageRefresh(callback) {
 		if (data.timer != null)
 			data.timer = Date.parse(data.timer);
 			
-		if (notifyAudio != null && pcsVenueInfo != null && pcsVenueInfo.active_paper && !data.active_paper)
+		if (notifyAudio != null && pcsVenueInfo != null && pcsVenueInfo.active_paper && !data.active_paper && !data.breaktime)
 			notifyAudio.play();
 			
 		pcsVenueInfo = data;
