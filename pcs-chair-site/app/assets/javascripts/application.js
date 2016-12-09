@@ -18,6 +18,13 @@
 var clientServerClockOffset = 0;
 var secondsWasZero = false;
 
+function connectVolume() {
+	$("#volumeRange").change(function(e) {
+		var volumeFloat = parseFloat($("#volumeRange").val());
+		notifyAudio.volume = timerAudio.volume = volumeFloat;
+	})
+}
+
 function startTimer() {
 	setInterval(function() {
 		if (pcsVenueInfo.timer != null && !pcsVenueInfo.breaktime) {
