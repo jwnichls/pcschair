@@ -20,7 +20,7 @@ var secondsWasZero = false;
 
 function startTimer() {
 	setInterval(function() {
-		if (pcsVenueInfo.timer != null) {
+		if (pcsVenueInfo.timer != null && !pcsVenueInfo.breaktime) {
 			var timeNow = (new Date()).getTime() + clientServerClockOffset;
 			var timeDiff = pcsVenueInfo.timer - timeNow;
 
