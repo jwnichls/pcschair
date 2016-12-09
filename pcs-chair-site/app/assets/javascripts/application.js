@@ -120,6 +120,8 @@ function makePaperRemoveClickHandler(paperId) {
 }
 
 function refreshPapers() {
+	$("#queue-count").html(pcsVenueInfo.papers.length + "");
+
 	$("#paper-queue").empty();
 	
 	for(i = 0; i < pcsVenueInfo.papers.length; i++) {

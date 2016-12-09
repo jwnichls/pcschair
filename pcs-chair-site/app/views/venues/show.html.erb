@@ -41,7 +41,7 @@ $(function() {
 </div>
 <div class="row rowspace50">
 	<div class="cold-md-12">
-		<p><b>Upcoming Papers:</b></p>
+		<p><b>Upcoming Papers: (<span id="queue-count"><%= @papers.length %></span>)</b></p>
 		<ul id="paper-queue">
 		<% @papers.each do |paper| -%>
 			<li class="paper"><%= paper.pcs_paper_id %></li>
