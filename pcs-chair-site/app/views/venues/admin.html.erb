@@ -12,6 +12,7 @@ $(function() {
 
 	forcePageRefresh(function() { 
 		forcePapersRefresh(function() {
+			setClockSync();
 			startTimer();
 			startVenueUpdate();			
 		});
@@ -34,7 +35,7 @@ $(function() {
 	$("#setTimer").click(function() {
 		var increment = parseInt($("#timerNum").val());
 		if (Number.isInteger(increment)) {
-			var newTime = new Date((new Date()).getTime() + increment*60*1000);
+			var newTime = new Date((new Date()).getTime() + increment*60*1000 - clientServerClockOffset);
 			var sendData = {timer : newTime.toUTCString()};
 			updateVenueWithData(sendData, function() { forcePageRefresh(); });
 		}

@@ -6,4 +6,7 @@ class FrontController < ApplicationController
     
     # this is the front page
   end
+  
+  def ntp
+  end
 end

@@ -10,6 +10,9 @@ PCSChairingAssistant::Application.routes.draw do
     end
   end
 
+  # NTP
+  match "/ntp" => "front#ntp"
+
   # Root
   root :to => "front#index"
 
