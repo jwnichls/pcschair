@@ -32,7 +32,13 @@ chrome.runtime.onMessage.addListener(function(message, sender, callback) {
 	}
 	else if (message.type == "open-pcs-page") {
 		if (PCS_USER_REF != null) {
-			chrome.tabs.create({'url': "https://precisionconference.com/~chi17pn/adminOnePaper?userRef=" + PCS_USER_REF + "&paperNumber=" + message.paperId + "&noHomeButton=true&noLogoutButton=true&closeWindowButton=true&anonView=true"});
+			chrome.tabs.query({url: 'https://precisionconference.com/*'}, function(results) {
+				if (results.length > 0) {
+					chrome.tabs.create({'windowId': results[0].windowId, 'index': results[0].index+1, 'url': "https://precisionconference.com/~chi17pn/adminOnePaper?userRef=" + PCS_USER_REF + "&paperNumber=" + message.paperId + "&noHomeButton=true&noLogoutButton=true&closeWindowButton=true&anonView=true"});
+				} else {
+					chrome.tabs.create({'url': "https://precisionconference.com/~chi17pn/adminOnePaper?userRef=" + PCS_USER_REF + "&paperNumber=" + message.paperId + "&noHomeButton=true&noLogoutButton=true&closeWindowButton=true&anonView=true"});
+				}
+			});
 		}
 	}
 });
