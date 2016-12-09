@@ -23,7 +23,7 @@ $(function() {
 		updateVenueWithData(sendData, function() { forcePageRefresh(); });
 	})
 	$("#endbreak").click(function() {
-		var sendData = {breaktime : false};
+		var sendData = {breaktime : false, timer: null, active_paper : false, paper_pcs_id : 0};
 		updateVenueWithData(sendData, function() { forcePageRefresh(); });
 		
 		notifyAudio.play();
