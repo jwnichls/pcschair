@@ -21,8 +21,8 @@ var secondsWasZero = false;
 function startTimer() {
 	setInterval(function() {
 		if (pcsVenueInfo.timer != null) {
-			var timeNow = (new Date()).getTime();
-			var timeDiff = pcsVenueInfo.timer + clientServerClockOffset - timeNow;
+			var timeNow = (new Date()).getTime() + clientServerClockOffset;
+			var timeDiff = pcsVenueInfo.timer - timeNow;
 
 			var minutes = 0;
 			var seconds = 0;
