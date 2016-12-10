@@ -66,13 +66,17 @@ $(function() {
 		    // active paper data updated
 		});
 		
+		/*
+		 * Removing automatic unload
+		
 		$($("a.rollover")[0])
 			.attr("href",'')
 			.click(function() { PCSCHAIRclearActivePaper(true); });
 			
 		$(window).on("beforeunload",function() {
 			PCSCHAIRclearActivePaper(false);
-		})		
+		})
+		*/		
 	}
 	else if (window.location.host == "pcschair.org" && window.location.pathname.indexOf("admin") > 0) {
 		var updateFunc = function() {
