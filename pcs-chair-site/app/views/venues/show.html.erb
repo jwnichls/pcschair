@@ -18,6 +18,23 @@ $(function() {
 			startVenueUpdate();
 		});
 	});
+	
+	$("#addNewPaper").click(function() {
+		var paperId = parseInt($("#newPaperId").val());
+		if (Number.isInteger(paperId)) {
+			var sendData = { 
+					pcs_id : paperId
+				};
+
+			$.ajax({
+			           type: "POST",
+			           url: "/venues/" + venueID + "/addpaper",
+			           dataType: "json",
+			           success: function() { forcePapersRefresh(); },
+			           data: sendData
+			       });	
+		}
+	})
 })
 </script>
 
@@ -25,7 +42,7 @@ $(function() {
 
 <h1><%= @venue.name %></h1>
 
-<div id="volume">
+<div id="controls">
 	Volume: <input id="volumeRange" type="range" min="0.0" max="1.0" step="0.01" value="0.5"/>
 </div>
 
@@ -54,5 +71,10 @@ $(function() {
 			<li class="paper"><%= paper.pcs_paper_id %></li>
 		<% end -%>
 		</ul>
+		<p>
+			Add A Paper: 
+			<input type="text" id="newPaperId"/>
+			<button id="addNewPaper">Add</button>
+		</p>
 	</div>
 </div>
