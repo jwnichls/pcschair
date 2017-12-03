@@ -49,7 +49,7 @@ $(function() {
 			authors += name + " - " + affiliation;
 		}
 		
-		// alert("ID: " + paperId + "\nTitle: " + title + "\n" + authors);
+		alert("ID: " + paperId + "\nTitle: " + title + "\n" + authors);
 		var sendData = {
 			"paper_title" : title,
 		    "paper_authors" : authors,
