@@ -146,7 +146,7 @@ function refreshPapers() {
 
 			var paperLink = $("<a></a>").text(paperId).addClass("paperLink");
 			if (pcsUserRef != null) {
-				link.attr("href","https://precisionconference.com/~chi17pn/adminOnePaper?userRef=" + pcsUserRef + "&paperNumber=" + paperId + "&noHomeButton=true&noLogoutButton=true&closeWindowButton=true")
+				link.attr("href","https://confs.precisionconference.com/~chi18a/adminOnePaper?userRef=" + pcsUserRef + "&paperNumber=" + paperId + "&noHomeButton=true&noLogoutButton=true&closeWindowButton=true")
 			}
 			paperItem.append(paperLink);
 
