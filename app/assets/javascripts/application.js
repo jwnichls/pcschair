@@ -172,10 +172,15 @@ function forcePageRefresh(callback) {
 	$.getJSON("/venues/" + venueID + ".json",function(data) {
 		if (data.timer != null)
 			data.timer = Date.parse(data.timer);
-			
+		
+		// If we move from an active paper to an inactive state, play the alert sound	
 		if (notifyAudio != null && pcsVenueInfo != null && pcsVenueInfo.active_paper && !data.active_paper && !data.breaktime)
 			notifyAudio.play();
-			
+		
+		// If we move to a different paper than previous, play the alert sound
+		if (notifyAudio != null && pcsVenueInfo != null && pcsVenueInfo.active_paper && data.active_paper && pcsVenueInfo.paper_pcs_id != data.paper_pcs_id)
+			notifyAudio.play();
+		
 		pcsVenueInfo = data;
 
 		refreshPage();
