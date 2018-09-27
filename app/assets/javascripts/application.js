@@ -91,7 +91,17 @@ function refreshPage() {
 		replacePaperInfo();
 		$("#break").addClass("invisible");
 		$("#main").removeClass("invisible");
-	}				
+	}
+	
+	if (pcsVenueInfo.pcs2_flag) {
+		$("#pcs2flag").text("true");
+	} else {
+		$("#pcs2flag").text("false");
+	}
+
+	if (pcsVenueInfo.pcs2_venue_name) {
+		$("#pcs2venueName").text(pcsVenueInfo.pcs2_venue_name);
+	}
 }
 
 function makePaperMoveClickHandler(direction, paperId) {
