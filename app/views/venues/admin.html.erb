@@ -58,6 +58,10 @@ $(function() {
 			       });	
 		}
 	})
+	$("#allowUserAdds").change(function() {
+		var sendData = {allow_adds : $("#allowUserAdds")[0].checked};
+		updateVenueWithData(sendData, function() { forcePageRefresh(); });
+	})
 	$("#clearActivePaper").click(function() {
 		var sendData = {active_paper : false};
 		updateVenueWithData(sendData, function() { forcePageRefresh(); });
@@ -83,6 +87,8 @@ $(function() {
 		Paper Queue: 
 		<input type="text" id="newPaperId"/>
 		<button id="addNewPaper">Add</button>
+		
+		<input type="checkbox" id="allowUserAdds"/> Allow Users to Add
 		
 		<button id="clearActivePaper">Clear Active Paper</button>
 	</p>
@@ -115,7 +121,13 @@ $(function() {
 		<p><b>Upcoming Papers: (<span id="queue-count"><%= @papers.length %></span>)</b></p>
 		<ul id="paper-queue">
 		<% @papers.each do |paper| -%>
-			<li class="paper"><%= paper.pcs_paper_id %></li>
+			<li class="paper">
+				<% if @venue.pcs2_flag -%>
+					<%= link_to paper.pcs_paper_id, "https://new.precisionconference.com/" + @venue.pcs2_venue_name + "/chair/subs/" + paper.pcs_paper_id.to_s %>
+				<% else -%>
+					<%= paper.pcs_paper_id %>
+				<% end -%>
+			</li>
 		<% end -%>
 		</ul>
 	</div>

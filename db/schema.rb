@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20161127201150) do
+ActiveRecord::Schema.define(:version => 20180927020052) do
 
   create_table "papers", :force => true do |t|
     t.integer  "venue_id"
@@ -29,8 +29,11 @@ ActiveRecord::Schema.define(:version => 20161127201150) do
     t.string   "paper_title"
     t.text     "paper_authors"
     t.integer  "paper_pcs_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "pcs2_flag"
+    t.string   "pcs2_venue_name"
+    t.boolean  "allow_adds",      :default => true
   end
 
 end

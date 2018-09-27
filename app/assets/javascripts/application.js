@@ -145,8 +145,10 @@ function refreshPapers() {
 			}
 
 			var paperLink = $("<a></a>").text(paperId).addClass("paperLink");
-			if (pcsUserRef != null) {
-				link.attr("href","https://confs.precisionconference.com/~chi18a/adminOnePaper?userRef=" + pcsUserRef + "&paperNumber=" + paperId + "&noHomeButton=true&noLogoutButton=true&closeWindowButton=true")
+			if (pcsVenueInfo.pcs2_flag && pcsVenueInfo.pcs2_venue_name != null) {
+				paperLink.attr("href","https://new.precisionconference.com/" + pcsVenueInfo.pcs2_venue_name + "/chair/subs/" + paperId);
+			} else if (pcsUserRef != null) {
+				paperLink.attr("href","https://confs.precisionconference.com/~chi18a/adminOnePaper?userRef=" + pcsUserRef + "&paperNumber=" + paperId + "&noHomeButton=true&noLogoutButton=true&closeWindowButton=true");
 			}
 			paperItem.append(paperLink);
 
@@ -161,7 +163,13 @@ function refreshPapers() {
 			paperItem.append(" ",removeLink);
 			removeLink.click(makePaperRemoveClickHandler(paperId));
 		} else {
-			paperItem.append($("<span></span>").text(paperId));
+			if (pcsVenueInfo.pcs2_flag && pcsVenueInfo.pcs2_venue_name != null) {
+				var paperLink = $("<a></a>").text(paperId).addClass("paperLink");
+				paperLink.attr("href","https://new.precisionconference.com/" + pcsVenueInfo.pcs2_venue_name + "/committee/subs/" + paperId);
+				paperItem.append(paperLink);
+			} else {
+				paperItem.append($("<span></span>").text(paperId));
+			}
 		}
 		
 		$("#paper-queue").append(paperItem);
