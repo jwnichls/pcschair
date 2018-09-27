@@ -93,7 +93,7 @@ $(function() {
 		<input type="text" id="newPaperId"/>
 		<button id="addNewPaper">Add</button>
 		
-		<input type="checkbox" id="allowUserAdds"/> Allow Users to Add
+		<input type="checkbox" id="allowUserAdds" <%= @venue.allow_adds ? 'checked' : '' %>/> Allow Users to Add
 		
 		<button id="clearActivePaper">Clear Active Paper</button>
 	</p>
