@@ -70,8 +70,8 @@ $(function() {
 </script>
 
 <div class="invisible">
-	<span id="pcs2flag"></span>
-	<span id="pcs2venueName"></span>
+	<span id="pcs2flag"><%= @venue.pcs2_flag.to_s %></span>
+	<span id="pcs2venueName"><%= @venue.pcs2_venue_name %></span>
 </div>
 
 <p id="notice"><%= notice %></p>
@@ -96,6 +96,11 @@ $(function() {
 		<input type="checkbox" id="allowUserAdds" <%= @venue.allow_adds ? 'checked' : '' %>/> Allow Users to Add
 		
 		<button id="clearActivePaper">Clear Active Paper</button>
+		
+		<span id="extension-controls">
+			Extension <span id="link-status">Not Installed</span>
+			<button id="setExtensionIdButton" class="invisible">Link</button>
+		</span>
 	</p>
 </div>
 <div id="break" class="row invisible">
