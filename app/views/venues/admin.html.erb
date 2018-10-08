@@ -133,7 +133,7 @@ $(function() {
 		<% @papers.each do |paper| -%>
 			<li class="paper">
 				<% if @venue.pcs2_flag -%>
-					<%= link_to paper.pcs_paper_id, "https://new.precisionconference.com/" + @venue.pcs2_venue_name + "/chair/subs/" + paper.pcs_paper_id.to_s %>
+					<%= link_to paper.pcs_paper_id, "https://new.precisionconference.com/" + @venue.pcs2_venue_name + "/chair/subs/" + paper.pcs_paper_id.to_s, target: "_pcs_paper" %>
 				<% else -%>
 					<%= paper.pcs_paper_id %>
 				<% end -%>
