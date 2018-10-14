@@ -156,7 +156,7 @@ function refreshPapers() {
 
 			var paperLink = $("<a></a>").text(paperId).addClass("paperLink").attr("target","_pcs_paper");
 			if (pcsVenueInfo.pcs2_flag && pcsVenueInfo.pcs2_venue_name != null) {
-				paperLink.attr("href","https://new.precisionconference.com/" + pcsVenueInfo.pcs2_venue_name + "/chair/subs/" + paperId);
+				paperLink.attr("href","https://new.precisionconference.com/" + pcsVenueInfo.pcs2_venue_name + (pcsVenueInfo.sub_committee ? "/subchair1" : "/chair") + "/subs/" + paperId);
 			} else if (pcsUserRef != null) {
 				paperLink.attr("href","https://confs.precisionconference.com/~chi18a/adminOnePaper?userRef=" + pcsUserRef + "&paperNumber=" + paperId + "&noHomeButton=true&noLogoutButton=true&closeWindowButton=true");
 			}
