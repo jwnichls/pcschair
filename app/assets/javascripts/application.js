@@ -68,7 +68,18 @@ function startTimer() {
 
 function replacePaperInfo() {
 	if (pcsVenueInfo.active_paper) {
-		var id = $("<p></p>").addClass("paper-id").text("Paper #" + pcsVenueInfo.paper_pcs_id);
+		var id = $("<p></p>").addClass("paper-id").addClass("paperLink").attr("target","_pcs_paper");
+		if (pcsVenueInfo.pcs2_flag && pcsVenueInfo.pcs2_venue_name != null) {
+			var idLink = $("<a></a>").text("Paper #" + pcsVenueInfo.paper_pcs_id);
+			if (adminFlag) {
+				idLink.attr("href","https://new.precisionconference.com/" + pcsVenueInfo.pcs2_venue_name + (pcsVenueInfo.sub_committee ? "/subchair1" : "/chair") + "/subs/" + pcsVenueInfo.paper_pcs_id);
+			} else {
+				idLink.attr("href","https://new.precisionconference.com/" + pcsVenueInfo.pcs2_venue_name + "/committee/subs/" + pcsVenueInfo.paper_pcs_id);
+			}
+			id.append(idLink);
+		} else {
+			id.text("Paper #" + pcsVenueInfo.paper_pcs_id);
+		}
 		var title = $("<p></p>").addClass("paper-title").text(pcsVenueInfo.paper_title);
 		var authors = $("<ul></ul>").addClass("paper-authors");
 		
