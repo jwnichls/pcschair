@@ -1,6 +1,6 @@
 class Paper < ActiveRecord::Base
   belongs_to :venue
-  attr_accessible :pcs_paper_id, :venue_id, :listorder
+  # attr_accessible :pcs_paper_id, :venue_id, :listorder
   
   def moveup
     papers = venue.papers.where("listorder < ?",self.listorder).order(:listorder)

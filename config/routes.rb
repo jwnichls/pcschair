@@ -1,4 +1,4 @@
-PCSChairingAssistant::Application.routes.draw do
+Rails.application.routes.draw do
 
   resources :venues do
     member do
@@ -11,7 +11,7 @@ PCSChairingAssistant::Application.routes.draw do
   end
 
   # NTP
-  match "/ntp" => "front#ntp"
+  get "/ntp" => "front#ntp"
 
   # Root
   root :to => "front#index"

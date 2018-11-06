@@ -1,4 +1,6 @@
 class VenuesController < ApplicationController
+  skip_before_action :verify_authenticity_token, :only => [:update]
+  
   # GET /venues
   # GET /venues.json
   def index
@@ -51,7 +53,7 @@ class VenuesController < ApplicationController
   # POST /venues
   # POST /venues.json
   def create
-    @venue = Venue.new(params[:venue])
+    @venue = Venue.new(venue_params)
 
     respond_to do |format|
       if @venue.save
@@ -70,7 +72,7 @@ class VenuesController < ApplicationController
     @venue = Venue.find(params[:id])
 
     respond_to do |format|
-      if @venue.update_attributes(params[:venue])
+      if @venue.update_attributes(venue_params)
         qpaper = @venue.papers.find_by_pcs_paper_id(@venue.paper_pcs_id)
         if qpaper != nil and !@venue.breaktime
           qpaper.destroy
@@ -147,5 +149,11 @@ class VenuesController < ApplicationController
         format.json { render json: @paper.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  private
+  
+  def venue_params
+    params.require(:venue).permit(:active_paper, :breaktime, :name, :paper_authors, :paper_pcs_id, :paper_title, :timer, :pcs2_flag, :pcs2_venue_name, :allow_adds, :sub_committee)
   end
 end

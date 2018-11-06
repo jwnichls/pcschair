@@ -1,6 +1,7 @@
 class CreateVenues < ActiveRecord::Migration
   def change
-    create_table :venues do |t|
+    enable_extension 'uuid-ossp'
+    create_table :venues, id: :uuid do |t|
       t.string :name
       t.boolean :active_paper
       t.datetime :timer
