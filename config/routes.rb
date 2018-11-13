@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :venues do
+  resources :venues, :only => [:show,:update] do
     member do
       get :admin
       get :papers
