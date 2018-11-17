@@ -158,11 +158,11 @@ function refreshPapers() {
 		var paperItem = $("<li></li>").addClass("paper");
 		if (adminFlag) {
 			if (i != 0) {
-				var upLink = $("<a></a>").addClass("upLink").html('<img src="/assets/up.jpg" width="12"/>');
+				var upLink = $("<a></a>").addClass("upLink").html('<img src="<%= asset_path('up.jpg') %>" width="12"/>');
 				paperItem.append(upLink);
 				upLink.click(makePaperMoveClickHandler(true, paperId));				
 			} else {
-				paperItem.append($('<img src="/assets/clear.jpg" width="12"/>'));
+				paperItem.append($('<img src="<%= asset_path('clear.jpg') %>" width="12"/>'));
 			}
 
 			var paperLink = $("<a></a>").text(paperId).addClass("paperLink").attr("target","_pcs_paper");
@@ -174,13 +174,13 @@ function refreshPapers() {
 			paperItem.append(paperLink);
 
 		 	if (i != pcsVenueInfo.papers.length-1) {
-				var downLink = $("<a></a>").addClass("downLink").html('<img src="/assets/down.jpg" width="12"/>');
+				var downLink = $("<a></a>").addClass("downLink").html('<img src="<%= asset_path('down.jpg') %>" width="12"/>');
 				paperItem.append(downLink);
 				downLink.click(makePaperMoveClickHandler(false, paperId))
 			} else {
-				paperItem.append($('<img src="/assets/clear.jpg" width="12"/>'));
+				paperItem.append($('<img src="<%= asset_path('clear.jpg') %>" width="12"/>'));
 			}
-			var removeLink = $("<a></a>").addClass("removeLink").html('<img src="/assets/remove.jpg" width="12"/>');
+			var removeLink = $("<a></a>").addClass("removeLink").html('<img src="<%= asset_path('remove.jpg') %>" width="12"/>');
 			paperItem.append(" ",removeLink);
 			removeLink.click(makePaperRemoveClickHandler(paperId));
 		} else {
