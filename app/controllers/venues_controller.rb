@@ -154,6 +154,6 @@ class VenuesController < ApplicationController
   private
   
   def venue_params
-    params.require(:venue).permit(:active_paper, :breaktime, :name, :paper_authors, :paper_pcs_id, :paper_title, :timer, :pcs2_flag, :pcs2_venue_name, :allow_adds, :sub_committee)
+    params.require(:venue).permit(:active_paper, :breaktime, :name, :paper_authors, :paper_pcs_id, :paper_title, :timer, :pcs2_flag, :pcs2_venue_name, :allow_adds, :sub_committee, :sub_committee_id)
   end
 end

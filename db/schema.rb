@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181014163212) do
+ActiveRecord::Schema.define(version: 20181117234551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,8 +36,9 @@ ActiveRecord::Schema.define(version: 20181014163212) do
     t.datetime "updated_at"
     t.boolean  "pcs2_flag"
     t.string   "pcs2_venue_name"
-    t.boolean  "allow_adds",      default: true
-    t.boolean  "sub_committee",   default: false
+    t.boolean  "allow_adds",       default: true
+    t.boolean  "sub_committee",    default: false
+    t.integer  "sub_committee_id", default: 0
   end
 
 end
