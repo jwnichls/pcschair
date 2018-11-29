@@ -70,7 +70,7 @@ function replacePaperInfo() {
 	if (pcsVenueInfo.active_paper) {
 		var id = $("<p></p>").addClass("paper-id").addClass("paperLink").attr("target","_pcs_paper");
 		if (pcsVenueInfo.pcs2_flag && pcsVenueInfo.pcs2_venue_name != null) {
-			var idLink = $("<a></a>").text("Paper #" + pcsVenueInfo.paper_pcs_id);
+			var idLink = $("<a></a>").text("Paper #" + pcsVenueInfo.paper_pcs_id).attr("target","_pcs_paper");
 			if (adminFlag) {
 				idLink.attr("href","https://new.precisionconference.com/" + pcsVenueInfo.pcs2_venue_name + (pcsVenueInfo.sub_committee ? "/subchair" + pcsVenueInfo.sub_committee_id : "/chair") + "/subs/" + pcsVenueInfo.paper_pcs_id);
 			} else {
