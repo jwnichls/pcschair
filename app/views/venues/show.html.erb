@@ -19,6 +19,13 @@ $(function() {
 		});
 	});
 	
+	// for some reason, if the user returns to this page from the back button, the time
+	// is not set correctly initially, which messes up the clock sync.  Waiting some
+	// extra time seems to resolve this issue
+	window.onpageshow=function() {
+		setTimeout(function() { setClockSync(); }, 100);
+	}
+	
 	$("#addNewPaper").click(function() {
 		var paperId = parseInt($("#newPaperId").val());
 		if (Number.isInteger(paperId)) {
