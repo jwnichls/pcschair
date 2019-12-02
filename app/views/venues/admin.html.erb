@@ -76,15 +76,16 @@ $(function() {
 })
 </script>
 
+<main>
 <p id="notice"><%= notice %></p>
 
 <h1>ADMIN VIEW: <%= @venue.name %></h1>
 
-<div id="volume">
-	Volume: <input id="volumeRange" type="range" min="0.0" max="1.0" step="0.01" value="0.5"/>
+<div id="volume" role="region" aria-label="Volume">
+	<label for="volumeRange">Volume:</label> <input id="volumeRange" type="range" min="0.0" max="1.0" step="0.01" value="0.5"/>
 </div>
 
-<div id="controls" class="row">
+<div id="controls" class="row" role="region" aria-label="Admin Controls">
 	<p>
 		Timer: 
 		<input type="text" id="timerNum" value="5"/>
@@ -114,10 +115,10 @@ $(function() {
 		<p><button id="takebreak">Take Break</button></p>
 	</div>
 	<div class="row mainrow rowspace50">
-		<div class="col-md-4" id="timer">
+		<div class="col-md-4" id="timer" role="region" aria-label="Timer">
 			0:00
 		</div>
-		<div class="col-md-8" id="paper-info">
+		<div class="col-md-8" id="paper-info" role="region" aria-label="Paper Information">
 			<% if @venue.active_paper -%>
 				<p class="paper-id"><%= @venue.paper_pcs_id %></p>
 				<p class="paper-title"><%= @venue.paper_title %></p>
@@ -129,8 +130,8 @@ $(function() {
 	</div>
 </div>
 <div class="row rowspace50">
-	<div class="cold-md-12">
-		<p><b>Upcoming Papers: (<span id="queue-count"><%= @papers.length %></span>)</b></p>
+	<div class="cold-md-12" role="region" aria-label="Upcoming papers">
+		<h4>Upcoming Papers: (<span id="queue-count"><%= @papers.length %></span>)</h4>
 		<ul id="paper-queue">
 		<% @papers.each do |paper| -%>
 			<li class="paper">
@@ -144,3 +145,4 @@ $(function() {
 		</ul>
 	</div>
 </div>
+</main>

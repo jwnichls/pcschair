@@ -50,22 +50,23 @@ $(function() {
 	<span id="pcs2venueName"></span>
 </div>
 
+<main>
 <p id="notice"><%= notice %></p>
 
 <h1><%= @venue.name %></h1>
 
-<div id="controls">
-	Volume: <input id="volumeRange" type="range" min="0.0" max="1.0" step="0.01" value="0.5"/>
+<div id="controls" role="region" aria-label="Controls">
+	<label for="volumeRange">Volume:</label> <input id="volumeRange" type="range" min="0.0" max="1.0" step="0.01" value="0.5"/>
 </div>
 
 <div id="break" class="row invisible">
 	<h2>Currently on Break</h2>
 </div>
 <div id="main" class="row mainrow rowspace50">
-<div class="col-md-4" id="timer">
+<div class="col-md-4" id="timer" role="region" aria-label="Timer">
 	0:00
 </div>
-<div class="col-md-8" id="paper-info">
+<div class="col-md-8" id="paper-info" role="region" aria-label="Paper Information">
 	<% if @venue.active_paper -%>
 		<p class="paper-id"><%= @venue.paper_pcs_id %></p>
 		<p class="paper-title"><%= @venue.paper_title %></p>
@@ -76,8 +77,8 @@ $(function() {
 </div>
 </div>
 <div class="row rowspace50">
-	<div class="cold-md-12">
-		<p><b>Upcoming Papers: (<span id="queue-count"><%= @papers.length %></span>)</b></p>
+	<div class="cold-md-12" role="region" aria-label="Upcoming Papers">
+		<h4>Upcoming Papers: (<span id="queue-count"><%= @papers.length %></span>)</h4>
 		<ul id="paper-queue">
 		<% @papers.each do |paper| -%>
 			<li class="paper">
@@ -90,11 +91,12 @@ $(function() {
 		<% end -%>
 		</ul>
 		<% if @venue.allow_adds -%>
-		<p>
-			Add A Paper: 
+		<p role="region" aria-label="Add a paper to upcoming list">
+			<label for="newPaperId">Add A Paper:</label>
 			<input type="text" id="newPaperId"/>
 			<button id="addNewPaper">Add</button>
 		</p>
 		<% end -%>
 	</div>
 </div>
+</main>
