@@ -11,6 +11,55 @@
 		background-color: #222;
 		color: #ccc;
 	}
+	a {
+		color: #8ecbff;
+	}
+	.expired {
+		color: rgb(255,100,100) !important;
+	}
+	.clearimg {
+		background: url(<%= asset_path('clear_dark.jpg') %>) !important;
+		background-size: 12px !important;
+	}
+	.downimg {
+		background: url(<%= asset_path('down_dark.jpg') %>) !important;
+		background-size: 12px !important;
+	}
+	.upimg {
+		background: url(<%= asset_path('up_dark.jpg') %>) !important;
+		background-size: 12px !important;
+	}
+	.removeimg {
+		background: url(<%= asset_path('remove_dark.jpg') %>) !important;
+		background-size: 12px !important;
+	}
+}
+
+.controlimg {
+	height: 12px;
+	width: 12px;
+	border: 0px;
+	display: inline-block;
+}
+
+.clearimg {
+	background: url(<%= asset_path('clear.jpg') %>);
+	background-size: 12px;
+}
+
+.downimg {
+	background: url(<%= asset_path('down.jpg') %>);
+	background-size: 12px;
+}
+
+.upimg {
+	background: url(<%= asset_path('up.jpg') %>);
+	background-size: 12px;
+}
+
+.removeimg {
+	background: url(<%= asset_path('remove.jpg') %>);
+	background-size: 12px;
 }
 
 div.mainrow {
