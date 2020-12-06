@@ -47,7 +47,13 @@ function startTimer() {
 				
 				if (!secondsWasZero && timerAudio != null && minutes == 0 && seconds == 0) {
 					secondsWasZero = true;
-					timerAudio.play();
+					var promise = timerAudio.play();
+
+					if (promise !== undefined) {
+					  promise.catch(error => {
+					    // Autoplay was prevented
+					  });
+					}
 				} else {
 					secondsWasZero = false;
 				}
@@ -83,7 +89,7 @@ function replacePaperInfo() {
 		}
 		var title = $("<p></p>").addClass("paper-title").text(pcsVenueInfo.paper_title);
 		var authors = $("<ul></ul>").addClass("paper-authors");
-		
+
 		var authorStrs = pcsVenueInfo.paper_authors.split("\n");
 		for(i = 0; i < authorStrs.length; i++)
 			authors.append($("<li></li>").addClass("author").text(authorStrs[i]));
@@ -204,12 +210,27 @@ function forcePageRefresh(callback) {
 			data.timer = Date.parse(data.timer);
 		
 		// If we move from an active paper to an inactive state, play the alert sound	
-		if (notifyAudio != null && pcsVenueInfo != null && pcsVenueInfo.active_paper && !data.active_paper && !data.breaktime)
-			notifyAudio.play();
+		if (notifyAudio != null && pcsVenueInfo != null && pcsVenueInfo.active_paper && !data.active_paper && !data.breaktime) {
+			// address new Chrome autoplay rules
+			var promise = notifyAudio.play();
+
+			if (promise !== undefined) {
+			  promise.catch(error => {
+			    // Autoplay was prevented
+			  });
+			}
+		}
 		
 		// If we move to a different paper than previous, play the alert sound
-		if (notifyAudio != null && pcsVenueInfo != null && pcsVenueInfo.active_paper && data.active_paper && pcsVenueInfo.paper_pcs_id != data.paper_pcs_id)
-			notifyAudio.play();
+		if (notifyAudio != null && pcsVenueInfo != null && pcsVenueInfo.active_paper && data.active_paper && pcsVenueInfo.paper_pcs_id != data.paper_pcs_id) {
+			var promise = notifyAudio.play();
+
+			if (promise !== undefined) {
+			  promise.catch(error => {
+			    // Autoplay was prevented
+			  });
+			}
+		}
 		
 		pcsVenueInfo = data;
 
