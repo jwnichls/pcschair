@@ -50,7 +50,7 @@ function startTimer() {
 					var promise = timerAudio.play();
 
 					if (promise !== undefined) {
-					  promise.catch(error => {
+					  promise.catch(function() {
 					    // Autoplay was prevented
 					  });
 					}
@@ -215,7 +215,7 @@ function forcePageRefresh(callback) {
 			var promise = notifyAudio.play();
 
 			if (promise !== undefined) {
-			  promise.catch(error => {
+			  promise.catch(function() {
 			    // Autoplay was prevented
 			  });
 			}
@@ -226,7 +226,7 @@ function forcePageRefresh(callback) {
 			var promise = notifyAudio.play();
 
 			if (promise !== undefined) {
-			  promise.catch(error => {
+			  promise.catch(function() {
 			    // Autoplay was prevented
 			  });
 			}
