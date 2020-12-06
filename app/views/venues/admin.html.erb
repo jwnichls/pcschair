@@ -73,6 +73,17 @@ $(function() {
 		var sendData = {active_paper : false};
 		updateVenueWithData(sendData, function() { forcePageRefresh(); });
 	})
+	$("#submitSCID").click(function() {
+		var scID = parseInt($("#subcommitteeInput").val());
+		if (isNaN(scID)) {
+			$("#subcommitteeInput").val("");
+			$("#subcommitteeInput").attr("placeholder","Must be a number");
+		} else {
+			$("#scalert").addClass("hidden");
+			var sendData = {sub_committee_id : scID};
+			updateVenueWithData(sendData, function() { forcePageRefresh(); });
+		}
+	})
 })
 </script>
 
@@ -80,6 +91,31 @@ $(function() {
 <p id="notice"><%= notice %></p>
 
 <h1>ADMIN VIEW: <%= @venue.name %></h1>
+
+<div id="scalert" class="alert alert-danger <%= !@venue.sub_committee || @venue.sub_committee_id >= 0 ? 'hidden' : '' %>" role="alert">
+	<h3>Information Needed</h3>
+	<div>
+		<p>
+			In order for upcoming papers links to work, you must supply the ID associated with
+			your subcommittee and split.  To determine the ID, please follow the steps below.
+			If you have any questions or difficulty, please 
+			<a href="mailto:jeff@jeffreynichols.com">send Jeff an e-mail.</a>
+		</p>
+		<ol>
+			<li>Go to <a href="https://new.precisionconference.com">PCS</a></li>
+			<li>Navigate to the page for a submission in your subcommittee and split</li>
+			<li>Examine the URL for the page, which should look similar to: https://new.precisionconference.com/chi21b/subchair16/subs/1234.</li>
+			<li>Enter the number after "subchair" into the field below (it is 16 in the example above).</li>
+		</ol>
+	</div>
+	<form class="form-inline">
+	  	<div class="form-group">
+	    	<label for="subcommitteeID">Subcommittee ID</label>
+	    	<input type="text" class="form-control" id="subcommitteeInput" placeholder="e.g., 4">
+	  	</div>
+	  	<button id="submitSCID" type="button" class="btn btn-default">Submit</button>
+	</form>
+</div>
 
 <div id="volume" role="region" aria-label="Volume">
 	<label for="volumeRange">Volume:</label> <input id="volumeRange" type="range" min="0.0" max="1.0" step="0.01" value="0.5"/>
