@@ -131,15 +131,18 @@ $(function() {
 		Paper Queue: 
 		<input type="text" id="newPaperId"/>
 		<button id="addNewPaper">Add</button>
-		
-		<input type="checkbox" id="allowUserAdds" <%= @venue.allow_adds ? 'checked' : '' %>/> Allow Users to Add
-		
+
 		<button id="clearActivePaper">Clear Active Paper</button>
 		
 		<span id="extension-controls">
 			Extension <span id="link-status">Not Installed</span>
 			<button id="setExtensionIdButton" class="invisible">Link</button>
 		</span>
+	</p>
+	<p>
+		<input type="checkbox" id="allowUserAdds" <%= @venue.allow_adds ? 'checked' : '' %>/> Allow Users to Add
+		&nbsp; &nbsp;
+		<input type="checkbox" id="autoUpdatePapers"/> Auto-Update Active Paper on Submission Page Visit
 	</p>
 </div>
 <div id="break" class="row invisible">

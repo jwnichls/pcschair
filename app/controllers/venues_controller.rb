@@ -1,5 +1,5 @@
 class VenuesController < ApplicationController
-  skip_before_action :verify_authenticity_token, :only => [:update]
+  skip_before_action :verify_authenticity_token, :only => [:update,:addpaper]
   
   # GET /venues
   # GET /venues.json
