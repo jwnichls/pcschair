@@ -70,7 +70,7 @@ $(function() {
 		updateVenueWithData(sendData, function() { forcePageRefresh(); });
 	})
 	$("#clearActivePaper").click(function() {
-		var sendData = {active_paper : false};
+		var sendData = {active_paper : false, timer: null};
 		updateVenueWithData(sendData, function() { forcePageRefresh(); });
 	})
 	$("#submitSCID").click(function() {
