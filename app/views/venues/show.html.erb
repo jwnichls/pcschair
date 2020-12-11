@@ -5,31 +5,66 @@ var notifyAudio = null;
 var timerAudio = null;
 var pcsVenueInfo = null;
 
+function removeACPaper(e) {
+	var paperId = parseInt($(e.target).parent().parent().text());
+
+	var acPapers = getACPapers();
+
+	var index = acPapers.indexOf(paperId);
+	if (index >= 0) {
+		acPapers.splice(index, 1);
+
+		localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(acPapers));
+		onACPaperListChange();
+	}
+}
+
+function onACPaperListChange() {
+	$('#acPaperList').empty()
+	var acPapers = getACPapers();
+
+	for (var i = 0; i < acPapers.length; i++) {
+		var paperId = acPapers[i];
+		$('#acPaperList').append(
+			$("<li></li>").
+				addClass('paper').
+				text(paperId).
+				append($("<a></a>").addClass('removeLink').
+					click(removeACPaper).
+					html('<div class="removeimg controlimg"></div>'))
+			);
+	}
+
+	forcePapersRefresh(function() {});
+}
+
+
 $(function() {
 	notifyAudio = new Audio('/alert.mp3');
 	timerAudio = new Audio('/lion.mp3');
-	
+
 	connectVolume();
-	
+
 	forcePageRefresh(function() {
 		forcePapersRefresh(function() {
 			setClockSync();
 			startTimer();
 			startVenueUpdate();
+			onACPaperListChange();
 		});
 	});
-	
+
 	// for some reason, if the user returns to this page from the back button, the time
 	// is not set correctly initially, which messes up the clock sync.  Waiting some
 	// extra time seems to resolve this issue
 	window.onpageshow=function() {
 		setTimeout(function() { setClockSync(); }, 100);
 	}
-	
+
 	$("#addNewPaper").click(function() {
 		var paperId = parseInt($("#newPaperId").val());
 		if (Number.isInteger(paperId)) {
-			var sendData = { 
+			var sendData = {
 					pcs_id : paperId
 				};
 
@@ -39,9 +74,33 @@ $(function() {
 			           dataType: "json",
 			           success: function() { forcePapersRefresh(); },
 			           data: sendData
-			       });	
+			       });
 		}
 	})
+
+	$("#addACPaper").click(function() {
+		var paperId = parseInt($("#acPaperId").val());
+		if (Number.isInteger(paperId)) {
+			// Get current papers
+			var acPapers = getACPapers();
+
+			// Don't add a duplicate
+			if (acPapers.indexOf(paperId) < 0) {
+				acPapers[acPapers.length] = paperId;
+
+				// Save new list of AC paper IDs
+				localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(acPapers));
+			}
+
+			onACPaperListChange();
+			$("#acPaperId").val('');
+		}
+	});
+
+	$("#clearAllACPapers").click(function() {
+		localStorage.removeItem(SESSION_STORAGE_KEY);
+		onACPaperListChange();
+	});
 })
 </script>
 
@@ -77,7 +136,7 @@ $(function() {
 </div>
 </div>
 <div class="row rowspace50">
-	<div class="cold-md-12" role="region" aria-label="Upcoming Papers">
+	<div class="col-md-6" role="region" aria-label="Upcoming Papers">
 		<h4>Upcoming Papers: (<span id="queue-count"><%= @papers.length %></span>)</h4>
 		<ul id="paper-queue">
 		<% @papers.each do |paper| -%>
@@ -97,6 +156,28 @@ $(function() {
 			<button id="addNewPaper">Add</button>
 		</p>
 		<% end -%>
+	</div>
+	<div class="col-md-6" role="region" aria-label="Highlight your AC papers">
+		<h4>Highlight Your AC Papers</h4>
+		<p>
+			Adding paper IDs to the list below will cause the corresponding IDs
+			to be highlighted in the upcoming papers list.  This makes it easier
+			to see when your papers are coming up.
+		</p>
+		<p>
+			<b>Please Note:</b> This list of ID numbers is stored locally in your
+			browser and nowhere else.  The web server has no knowledge of what you
+			enter here.  If you are still concerned, please don't use this
+			feature.
+		</p>
+		<p role="region" aria-label="Manage papers in AC list">
+			<label for="acPaperId">Add an AC Paper:</label>
+			<input type="text" id="acPaperId"/>
+			<button id="addACPaper">Add</button>
+			<button id="clearAllACPapers">Clear All AC Papers</button>
+		</p>
+		<ul id="acPaperList">
+		</ul>
 	</div>
 </div>
 </main>

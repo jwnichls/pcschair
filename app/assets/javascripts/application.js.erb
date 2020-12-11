@@ -18,6 +18,18 @@
 var clientServerClockOffset = 0;
 var secondsWasZero = false;
 
+var SESSION_STORAGE_KEY = "pcsChairACPapers";
+
+function getACPapers() {
+	var acPapersString = localStorage.getItem(SESSION_STORAGE_KEY);
+	var acPapers = [];
+	if (acPapersString != null && acPapersString != "") {
+		acPapers = JSON.parse(acPapersString);
+	}
+
+	return acPapers;
+}
+
 function connectVolume() {
 	$("#volumeRange").change(function(e) {
 		var volumeFloat = parseFloat($("#volumeRange").val());
@@ -33,18 +45,18 @@ function startTimer() {
 
 			var minutes = 0;
 			var seconds = 0;
-			
+
 			if (timeDiff > 0) {
 				$("#timer").removeClass("expired");
-				
+
 				var minutes = Math.floor(timeDiff / (60*1000));
 				var seconds = Math.floor(timeDiff / 1000) - (minutes * 60);
-			} else {				
+			} else {
 				$("#timer").addClass("expired");
-				
+
 				var minutes = Math.abs(Math.ceil(timeDiff / (60*1000)));
 				var seconds = Math.abs(Math.ceil((timeDiff + (minutes * 60*1000)) / 1000));
-				
+
 				if (!secondsWasZero && timerAudio != null && minutes == 0 && seconds == 0) {
 					secondsWasZero = true;
 					var promise = timerAudio.play();
@@ -57,14 +69,14 @@ function startTimer() {
 				} else {
 					secondsWasZero = false;
 				}
-				
+
 				minutes = "-" + minutes;
 			}
-			
+
 			if (seconds < 10) {
 				seconds = "0" + seconds;
 			}
-						
+
 			$("#timer").html(minutes + ":" + seconds);
 		} else {
 			$("#timer").removeClass("expired");
@@ -110,7 +122,7 @@ function refreshPage() {
 		$("#break").addClass("invisible");
 		$("#main").removeClass("invisible");
 	}
-	
+
 	if (pcsVenueInfo.pcs2_flag) {
 		$("#pcs2flag").text("true");
 	} else {
@@ -123,7 +135,7 @@ function refreshPage() {
 }
 
 function makePaperMoveClickHandler(direction, paperId) {
-	var sendData = { 
+	var sendData = {
 			dir : direction,
 			pcs_id : paperId
 		};
@@ -135,12 +147,12 @@ function makePaperMoveClickHandler(direction, paperId) {
 		           dataType: "json",
 		           success: function() { forcePapersRefresh(); },
 		           data: sendData
-		       });	
+		       });
 	}
 }
 
 function makePaperRemoveClickHandler(paperId) {
-	var sendData = { 
+	var sendData = {
 			pcs_id : paperId
 		};
 
@@ -151,7 +163,7 @@ function makePaperRemoveClickHandler(paperId) {
 		           dataType: "json",
 		           success: function() { forcePapersRefresh(); },
 		           data: sendData
-		       });	
+		       });
 	}
 }
 
@@ -159,15 +171,20 @@ function refreshPapers() {
 	$("#queue-count").html(pcsVenueInfo.papers.length + "");
 
 	$("#paper-queue").empty();
-	
+
+	var acPapers = getACPapers();
+
 	for(i = 0; i < pcsVenueInfo.papers.length; i++) {
 		var paperId = pcsVenueInfo.papers[i].pcs_paper_id;
 		var paperItem = $("<li></li>").addClass("paper");
+		if (!adminFlag && acPapers.indexOf(paperId) >= 0) {
+			paperItem.addClass('acPaper');
+		}
 		if (adminFlag) {
 			if (i != 0) {
 				var upLink = $("<a></a>").addClass("upLink").html('<div class="upimg controlimg"/>');
 				paperItem.append(upLink);
-				upLink.click(makePaperMoveClickHandler(true, paperId));				
+				upLink.click(makePaperMoveClickHandler(true, paperId));
 			} else {
 				paperItem.append($('<div class="clearimg controlimg"/>'));
 			}
@@ -199,7 +216,7 @@ function refreshPapers() {
 				paperItem.append($("<span></span>").text(paperId));
 			}
 		}
-		
+
 		$("#paper-queue").append(paperItem);
 	}
 }
@@ -208,8 +225,8 @@ function forcePageRefresh(callback) {
 	$.getJSON("/venues/" + venueID + ".json",function(data) {
 		if (data.timer != null)
 			data.timer = Date.parse(data.timer);
-		
-		// If we move from an active paper to an inactive state, play the alert sound	
+
+		// If we move from an active paper to an inactive state, play the alert sound
 		if (notifyAudio != null && pcsVenueInfo != null && pcsVenueInfo.active_paper && !data.active_paper && !data.breaktime) {
 			// address new Chrome autoplay rules
 			var promise = notifyAudio.play();
@@ -220,7 +237,7 @@ function forcePageRefresh(callback) {
 			  });
 			}
 		}
-		
+
 		// If we move to a different paper than previous, play the alert sound
 		if (notifyAudio != null && pcsVenueInfo != null && pcsVenueInfo.active_paper && data.active_paper && pcsVenueInfo.paper_pcs_id != data.paper_pcs_id) {
 			var promise = notifyAudio.play();
@@ -231,11 +248,11 @@ function forcePageRefresh(callback) {
 			  });
 			}
 		}
-		
+
 		pcsVenueInfo = data;
 
 		refreshPage();
-		
+
 		if (callback) callback();
 	})
 }
@@ -247,7 +264,7 @@ function forcePapersRefresh(callback) {
 		refreshPapers();
 
 		if (callback) callback();
-	})	
+	})
 }
 
 function startVenueUpdate() {
@@ -265,11 +282,11 @@ function updateVenueWithData(sendData, callback) {
 	           dataType: "json",
 	           success: callback,
 	           data: sendData
-	       });	
+	       });
 }
 
 
-// the following comes from: 
+// the following comes from:
 // http://stackoverflow.com/questions/1638337/the-best-way-to-synchronize-client-side-javascript-clock-with-server-date
 
 // the NTP algorithm
@@ -303,10 +320,10 @@ function setClockSync() {
 
 	        // we can get a more accurate version of t2 if the server's response
 	        // contains a Date header, which it generally will.
-	        // EDIT: as @Ariel rightly notes, the HTTP Date header only has 
+	        // EDIT: as @Ariel rightly notes, the HTTP Date header only has
 	        // second resolution, thus using it will actually make the calculated
-	        // result worse. For higher accuracy, one would thus have to 
-	        // return an extra header with a higher-resolution time. This 
+	        // result worse. For higher accuracy, one would thus have to
+	        // return an extra header with a higher-resolution time. This
 	        // could be done with nginx for example:
 	        // http://nginx.org/en/docs/http/ngx_http_core_module.html
 	        // var date = resp.getResponseHeader("Date");
@@ -318,8 +335,8 @@ function setClockSync() {
 
 	        // log the calculated value rtt and time driff so we can manually verify if they make sense
 	        console.log("NTP delay:", c.roundtripdelay, "NTP offset:", c.offset, "corrected: ", (new Date(t3 + c.offset)));
-	
+
 			clientServerClockOffset = c.offset;
 	    }
-	});	
+	});
 }
