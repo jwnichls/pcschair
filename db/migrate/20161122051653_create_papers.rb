@@ -1,4 +1,4 @@
-class CreatePapers < ActiveRecord::Migration
+class CreatePapers < ActiveRecord::Migration[5.0]
   def change
     enable_extension 'uuid-ossp'
     create_table :papers, id: :uuid do |t|

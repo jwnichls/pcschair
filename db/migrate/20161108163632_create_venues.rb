@@ -1,4 +1,4 @@
-class CreateVenues < ActiveRecord::Migration
+class CreateVenues < ActiveRecord::Migration[5.0]
   def change
     enable_extension 'uuid-ossp'
     create_table :venues, id: :uuid do |t|

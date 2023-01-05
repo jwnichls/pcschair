@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :venues, :except => [:index,:destroy] do
+  resources :venues, :except => [:destroy] do
     member do
       get :admin
       get :papers

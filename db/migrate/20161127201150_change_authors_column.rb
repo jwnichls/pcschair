@@ -1,4 +1,4 @@
-class ChangeAuthorsColumn < ActiveRecord::Migration
+class ChangeAuthorsColumn < ActiveRecord::Migration[5.0]
   def up
     change_column :venues, :paper_authors, :text
   end
